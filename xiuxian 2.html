@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>九天万界 · 修仙人生 v4.2</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#f5f0ea;color:#2c2c2c;letter-spacing:.4px;font-family:"SimSun","Songti SC","Noto Serif CJK SC","STSong",serif;font-size:14px;max-width:480px;margin:0 auto;padding-bottom:80px}
+#welcome{position:fixed;inset:0;z-index:99;background:#f5f0ea;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer}
+#welcome .sym{font-size:72px;color:#2c2c2c;font-weight:300;animation:wSpin 1.3s ease .1s both}
+#welcome .tt{font-size:28px;letter-spacing:16px;font-weight:600;margin:12px 0 4px;color:#2c2c2c}
+#welcome .sub{font-size:11px;color:#888;letter-spacing:6px;margin-bottom:20px}
+#welcome .btn{font-size:14px;color:#2c2c2c;border:1px solid #ccc;border-radius:24px;padding:12px 44px;letter-spacing:6px;margin-top:12px;cursor:pointer;background:#fff}
+#welcome .foot{font-size:7px;color:#bbb;letter-spacing:3px;margin-top:32px}
+@keyframes wSpin{from{opacity:0;transform:scale(.5) rotate(-200deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+#gender{position:fixed;inset:0;z-index:98;background:#f5f0ea;display:none;flex-direction:column;align-items:center;justify-content:center;padding:30px 24px}
+#gender.on{display:flex}
+.gd-t{font-size:20px;letter-spacing:10px;margin:6px 0 12px;font-weight:500}
+.gd-input{width:100%;max-width:330px;border:1px solid #d4cdc4;border-radius:10px;padding:13px 16px;font-size:15px;letter-spacing:3px;text-align:center;font-family:inherit;background:#fff;color:#2c2c2c;margin-bottom:14px;outline:none}
+.gd-cards{display:flex;gap:14px;width:100%;max-width:340px;margin:10px 0}
+.gd-card{flex:1;border:1px solid #d4cdc4;border-radius:12px;padding:24px 10px 18px;text-align:center;cursor:pointer;background:#fff}
+.gd-card:active{background:#f0ece4}
+.gd-ic{font-size:32px;margin-bottom:8px}
+.gd-card b{font-size:15px;letter-spacing:3px;font-weight:500}
+.gd-card span{font-size:9px;color:#888;letter-spacing:1px;line-height:1.8}
+.hd{background:#fff;padding:12px 14px 10px;border-bottom:1px solid #e4ddd5;position:sticky;top:0;z-index:10;display:flex;gap:6px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.hd-main{flex:1;min-width:0}
+.hd-top{display:flex;justify-content:space-between;align-items:baseline}
+.name{font-size:17px;letter-spacing:4px;font-weight:600}
+.coin{font-size:12px;color:#888;letter-spacing:1px}
+.realm{font-size:11px;color:#999;letter-spacing:2px;margin-top:3px}
+.bar{height:6px;border:1px solid #ccc;border-radius:3px;margin-top:6px;overflow:hidden;background:#eee}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#6a4e2e,#b8860b);border-radius:2px;transition:width .4s}
+.row2{display:flex;justify-content:space-between;font-size:10px;color:#aaa;margin-top:4px;letter-spacing:1px}
+.tabs{display:flex;background:#fff;border-bottom:1px solid #e4ddd5;position:sticky;top:72px;z-index:9;overflow-x:auto}
+.tabs div{flex:0 0 auto;padding:10px 14px 8px;font-size:11px;letter-spacing:2px;color:#999;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;font-family:serif}
+.tabs div.on{color:#2c2c2c;border-bottom-color:#2c2c2c;font-weight:600}
+.pg{display:none;padding:12px 14px}
+.pg.on{display:block}
+.card{background:#fff;border:1px solid #e4ddd5;border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.card h3{font-size:15px;letter-spacing:5px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #f0ece4;font-weight:600}
+.kv{display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px dashed #f0ece4;color:#555}
+.kv:last-child{border:none}
+.kv b{font-weight:500;color:#2c2c2c}
+.btn{display:inline-block;background:#fff;color:#2c2c2c;border:1px solid #ccc;padding:10px 20px;font-size:13px;letter-spacing:2px;border-radius:8px;font-family:inherit;cursor:pointer;transition:.15s}
+.btn:active{background:#f0ece4}
+.btn.sm{padding:6px 14px;font-size:11px;letter-spacing:1px}
+.btn.gray{color:#999;border-color:#d4cdc4}
+.btn.warn{color:#a93226;border-color:#d4a4a4}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.log{background:#faf8f5;border:1px solid #e4ddd5;border-radius:8px;font-size:11px;line-height:2;padding:10px 12px;max-height:200px;overflow-y:auto;color:#555}
+.log .gold{color:#b8860b}
+.log .bad{color:#a93226}
+.log .ok{color:#2e7d32}
+#sideMask{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}
+#side{position:fixed;left:0;top:0;bottom:0;width:240px;background:#fff;border-right:1px solid #e4ddd5;z-index:41;transform:translateX(-100%);transition:transform .25s;display:flex;flex-direction:column}
+#side.open{transform:translateX(0)}
+.sd-hd{padding:20px 18px 14px;border-bottom:1px solid #f0ece4}
+.sd-hd .t1{font-size:15px;letter-spacing:5px;font-weight:500}
+.sd-hd .t2{font-size:8px;color:#bbb;letter-spacing:3px;margin-top:4px}
+.sd-item{display:flex;align-items:center;padding:12px 18px;border-bottom:1px solid #f7f4ef;cursor:pointer;font-size:13px;letter-spacing:2px;color:#333}
+.sd-item:active{background:#f5f0ea}
+.sd-item .ic{width:22px;font-size:12px;color:#999}
+.sd-sep{height:8px;background:#faf8f5;border-bottom:1px solid #f0ece4}
+.sd-foot{margin-top:auto;padding:12px 18px;font-size:7px;color:#ccc;letter-spacing:2px;border-top:1px solid #f0ece4}
+.ham{font-size:18px;color:#333;cursor:pointer;padding:2px 4px;font-family:serif}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:50}
+.modal .box{background:#fff;border-radius:12px;padding:24px 22px 18px;max-width:340px;width:90%;text-align:center;max-height:80vh;overflow-y:auto}
+.modal .box h2{font-size:16px;letter-spacing:5px;margin-bottom:10px;font-weight:500}
+.modal .box p{font-size:12px;line-height:2;letter-spacing:1px;color:#555}
+.pill{display:inline-block;background:#f5f0ea;border:1px solid #e4ddd5;border-radius:12px;padding:1px 8px;font-size:10px;margin:2px 3px;color:#333;letter-spacing:1px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g-card{background:#fff;border:1px solid #e4ddd5;border-radius:10px;padding:16px 10px;text-align:center;cursor:pointer;transition:.15s}
+.g-card:active{background:#f5f0ea}
+.g-card .ic{font-size:22px;display:block;margin-bottom:4px}
+.g-card .gn{font-size:13px;letter-spacing:2px;color:#333}
+.g-card .ge{font-size:7px;color:#bbb;letter-spacing:2px;margin-top:2px}
+#saveBox{display:none;position:fixed;inset:0;z-index:30}
+#saveBox .mask{position:absolute;inset:0;background:rgba(0,0,0,.4)}
+#saveBox .dialog{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:90%;max-height:80vh;background:#fff;border-radius:12px;overflow:hidden;text-align:center}
+.sb-head{padding:14px 0 10px;font-size:12px;letter-spacing:6px;border-bottom:1px solid #f0ece4;font-weight:500}
+#saveList{padding:12px 14px;max-height:50vh;overflow-y:auto}
+.sb-card{border:1px solid #e4ddd5;border-radius:8px;padding:10px 12px;margin-bottom:10px;text-align:left}
+.sb-top{display:flex;align-items:center;gap:8px;font-size:12px}
+.sb-rank{font-size:9px;color:#fff;background:#2c2c2c;border-radius:10px;padding:1px 8px;margin-left:auto}
+.sb-info{font-size:9px;color:#888;margin:4px 0;border-top:1px dashed #f0ece4;padding-top:4px}
+.sb-btns{display:flex;gap:6px;margin-top:4px}
+.sb-btns .cf-btn{flex:1;text-align:center;font-size:10px;padding:6px 0;border:1px solid #e4ddd5;border-radius:6px;cursor:pointer;background:#faf8f5}
+.sb-btns .load{background:#f0ece4}
+.sb-btns .del{border-color:#d4a4a4;color:#a93226}
+#saveBox .cf-btns{display:flex;gap:6px;padding:8px 14px 14px}
+#saveBox .cf-btns .cf-btn{flex:1;text-align:center;font-size:11px;padding:9px 0;border:1px solid #d4cdc4;border-radius:8px;cursor:pointer;background:#faf8f5;letter-spacing:2px}
+.sb-empty{padding:30px 0;font-size:11px;color:#bbb;letter-spacing:3px}
+.hide{display:none}
+.footer{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:1px solid #e4ddd5;font-size:10px;padding:6px 14px;display:flex;justify-content:space-between;color:#999;letter-spacing:1px;z-index:9}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-thumb{background:#d4cdc4;border-radius:2px}
+</style>
+</head>
+<body>
+
+<div id="welcome" onclick="enterGame()">
+  <div style="position:absolute;top:10%;left:0;width:100%;text-align:center;font-size:10px;color:#bbb;letter-spacing:6px">九天万界</div>
+  <div class="sym">☯</div>
+  <div class="tt">修仙人生</div>
+  <div class="sub">IMMORTAL · SIMULATOR</div>
+  <div style="font-size:9px;color:#bbb;letter-spacing:3px;line-height:2;max-width:280px;margin:6px 0 10px">红尘·紫府·大罗·鸿蒙<br>四界无尽 · 因果自由</div>
+  <div class="btn">轻触进入</div>
+  <div class="foot">EST. 2026 · LOCAL ONLY · v4.2</div>
+</div>
+
+<div id="gender">
+  <div style="font-size:9px;color:#bbb;letter-spacing:7px">CREATE</div>
+  <div class="gd-t">创建道体</div>
+  <div style="font-size:9px;color:#999;letter-spacing:2px;margin-bottom:12px">道号 · 性别 · 灵根 · 出身</div>
+  <input class="gd-input" id="gdName" maxlength="8" placeholder="道号（8字以内）" value="无名散修">
+  <div style="display:flex;gap:8px;margin-bottom:12px;width:100%;max-width:340px">
+    <button class="btn sm" onclick="randName()" style="flex:1">✳ 随机道号</button>
+    <button class="btn sm gray" onclick="document.getElementById('gdName').value=''" style="flex:1">清空</button>
+  </div>
+  <div style="font-size:9px;color:#888;letter-spacing:1px;margin-bottom:6px;width:100%;max-width:340px;text-align:left">灵根（20种）</div>
+  <select id="gdLinggen" style="width:100%;max-width:340px;padding:10px 12px;border:1px solid #d4cdc4;border-radius:8px;font-family:inherit;font-size:13px;background:#fff;margin-bottom:10px;outline:none">
+    <option value="random">🌿 随机灵根</option>
+    <option value="金">金灵根 · 剑心通明</option>
+    <option value="木">木灵根 · 草木亲和</option>
+    <option value="水">水灵根 · 道心如水</option>
+    <option value="火">火灵根 · 火脉炽烈</option>
+    <option value="土">土灵根 · 厚土载物</option>
+    <option value="风">风灵根 · 御风而行</option>
+    <option value="雷">雷灵根 · 雷罚淬体</option>
+    <option value="冰">冰灵根 · 寒魄凝神</option>
+    <option value="光">光灵根 · 光明普照</option>
+    <option value="暗">暗灵根 · 暗影潜行</option>
+    <option value="空间">空间灵根 · 虚空行者</option>
+    <option value="时间">时间灵根 · 岁月掌控</option>
+    <option value="混沌">混沌灵根 · 万法归一</option>
+    <option value="无属性">无属性 · 中庸之道</option>
+    <option value="变异">变异灵根 · 不可预测</option>
+  </select>
+  <div style="font-size:9px;color:#888;letter-spacing:1px;margin-bottom:6px;width:100%;max-width:340px;text-align:left">出身</div>
+  <select id="gdOrigin" style="width:100%;max-width:340px;padding:10px 12px;border:1px solid #d4cdc4;border-radius:8px;font-family:inherit;font-size:13px;background:#fff;margin-bottom:14px;outline:none">
+    <option value="散修">散修 · 无拘无束</option>
+    <option value="宗门弟子">宗门弟子 · 太虚剑宗外门</option>
+    <option value="家族子弟">修仙家族子弟</option>
+    <option value="没落世家">没落世家后裔</option>
+    <option value="皇朝贵族">皇朝贵族</option>
+    <option value="凡人少年">凡人少年 · 初入仙途</option>
+    <option value="魔道修士">魔道修士 · 亦正亦邪</option>
+    <option value="隐世传承">隐世传承者</option>
+  </select>
+  <div class="gd-cards">
+    <div class="gd-card" onclick="finishChar('男')"><div class="gd-ic">☰</div><b>乾 · 男</b><span>阳刚之气<br>剑指苍穹</span></div>
+    <div class="gd-card" onclick="finishChar('女')"><div class="gd-ic">☷</div><b>坤 · 女</b><span>阴柔之姿<br>袖藏乾坤</span></div>
+  </div>
+  <div style="font-size:8px;color:#bbb;letter-spacing:1px;margin-top:14px">选定后不可更改 · 重置仙途可重选</div>
+</div>
+
+<div id="main" style="display:none">
+<div class="hd">
+  <span class="ham" onclick="openSide()">☰</span>
+  <div class="hd-main">
+    <div class="hd-top"><div class="name">❖ <span id="nm">无名</span></div><div class="coin">¤ <span id="ls">100</span></div></div>
+    <div class="realm"><span id="rl">炼气期·一层</span> · 寿 <span id="life">100</span></div>
+    <div class="bar"><i id="xpbar" style="width:0%"></i></div>
+    <div class="row2"><span id="xptxt">修为 0 / 100</span><span id="speed">+10/秒</span></div>
+  </div>
+</div>
+<div class="tabs">
+  <div class="on" data-t="cult">修炼</div><div data-t="exp">历练</div><div data-t="shop">坊市</div><div data-t="sect">宗门</div><div data-t="world">世界</div>
+</div>
+
+<div class="pg on" id="pg-cult">
+  <div class="grid-2">
+    <div class="g-card" onclick="goSub('pg-cult',1)"><span class="ic">☸</span><div class="gn">打坐</div><div class="ge">MEDITATE</div></div>
+    <div class="g-card" onclick="goSub('pg-cult',2)"><span class="ic">❖</span><div class="gn">功法</div><div class="ge">SCRIPTURE</div></div>
+    <div class="g-card" onclick="goSub('pg-cult',3)"><span class="ic">✦</span><div class="gn">装备</div><div class="ge">EQUIP</div></div>
+    <div class="g-card" onclick="goSub('pg-cult',4)"><span class="ic">∞</span><div class="gn">轮回</div><div class="ge">REBIRTH</div></div>
+  </div>
+  <div class="card hide"><h3>打坐</h3><div id="cultBox"></div></div>
+  <div class="card hide"><h3>功法</h3><div id="artBox"></div></div>
+  <div class="card hide"><h3>装备</h3><div id="eqBox"></div></div>
+  <div class="card hide"><h3>轮回</h3><div id="cycleBox"></div></div>
+</div>
+
+<div class="pg" id="pg-exp">
+  <div class="grid-2">
+    <div class="g-card" onclick="goSub('pg-exp',1)"><span class="ic">❂</span><div class="gn">秘境</div><div class="ge">WILD</div></div>
+    <div class="g-card" onclick="goSub('pg-exp',2)"><span class="ic">⚔</span><div class="gn">战斗</div><div class="ge">BATTLE</div></div>
+    <div class="g-card" onclick="goSub('pg-exp',3)"><span class="ic">≈</span><div class="gn">垂钓</div><div class="ge">FISH</div></div>
+    <div class="g-card" onclick="goSub('pg-exp',4)"><span class="ic">☯</span><div class="gn">游历</div><div class="ge">WANDER</div></div>
+  </div>
+  <div class="card hide"><h3>秘境</h3><div id="expBox"></div></div>
+  <div class="card hide"><h3>战斗</h3><div id="fightBox"></div></div>
+  <div class="card hide"><h3>垂钓</h3><div id="fishBox"></div></div>
+  <div class="card hide"><h3>游历</h3><div id="wanderBox"></div></div>
+</div>
+
+<div class="pg" id="pg-shop">
+  <div class="grid-2">
+    <div class="g-card" onclick="goSub('pg-shop',1)"><span class="ic">¤</span><div class="gn">坊市</div><div class="ge">MARKET</div></div>
+    <div class="g-card" onclick="goSub('pg-shop',2)"><span class="ic">✸</span><div class="gn">炼丹</div><div class="ge">ALCHEMY</div></div>
+    <div class="g-card" onclick="goSub('pg-shop',3)"><span class="ic">▣</span><div class="gn">储物</div><div class="ge">STORAGE</div></div>
+    <div class="g-card" onclick="goSub('pg-shop',4)"><span class="ic">✿</span><div class="gn">灵园</div><div class="ge">GARDEN</div></div>
+    <div class="g-card" onclick="goSub('pg-shop',5)"><span class="ic">🔧</span><div class="gn">炼器</div><div class="ge">SMITH</div></div>
+  </div>
+  <div class="card hide"><h3>坊市</h3><div id="shopBox"></div></div>
+  <div class="card hide"><h3>炼丹</h3><div id="alchemyBox"></div></div>
+  <div class="card hide"><h3>储物</h3><div id="bagBox"></div></div>
+  <div class="card hide"><h3>灵园</h3><div id="farmBox"></div></div>
+  <div class="card hide"><h3>炼器</h3><div id="smithBox"></div></div>
+</div>
+
+<div class="pg" id="pg-sect">
+  <div class="grid-2">
+    <div class="g-card" onclick="goSub('pg-sect',1)"><span class="ic">❏</span><div class="gn">宗门</div><div class="ge">SECT</div></div>
+    <div class="g-card" onclick="goSub('pg-sect',2)"><span class="ic">✎</span><div class="gn">纪事</div><div class="ge">CHRON</div></div>
+    <div class="g-card" onclick="goSub('pg-sect',3)"><span class="ic">♞</span><div class="gn">灵宠</div><div class="ge">PET</div></div>
+    <div class="g-card" onclick="goSub('pg-sect',4)"><span class="ic">▣</span><div class="gn">宗门商店</div><div class="ge">EXCHANGE</div></div>
+  </div>
+  <div class="card hide"><h3>宗门</h3><div id="sectBox"></div></div>
+  <div class="card hide"><h3>纪事</h3><div class="log" id="logBox"></div></div>
+  <div class="card hide"><h3>灵宠</h3><div id="petBox"></div></div>
+  <div class="card hide"><h3>宗门商店</h3><div id="sectShopBox"></div></div>
+</div>
+
+<div class="pg" id="pg-world">
+  <div class="grid-2">
+    <div class="g-card" onclick="goSub('pg-world',1)"><span class="ic">🌏</span><div class="gn">世界月报</div><div class="ge">REPORT</div></div>
+    <div class="g-card" onclick="goSub('pg-world',2)"><span class="ic">☇</span><div class="gn">量劫</div><div class="ge">KALPA</div></div>
+    <div class="g-card" onclick="goSub('pg-world',3)"><span class="ic">✦</span><div class="gn">圣地</div><div class="ge">HOLY</div></div>
+    <div class="g-card" onclick="goSub('pg-world',4)"><span class="ic">⋆</span><div class="gn">三十三天</div><div class="ge">HEAVEN</div></div>
+    <div class="g-card" onclick="goSub('pg-world',5)"><span class="ic">🗺️</span><div class="gn">大地图</div><div class="ge">MAP</div></div>
+  </div>
+  <div class="card hide"><h3>世界月报</h3><div id="reportBox"></div></div>
+  <div class="card hide"><h3>量劫</h3><div id="kalpaBox"></div></div>
+  <div class="card hide"><h3>圣地</h3><div id="holyBox"></div></div>
+  <div class="card hide"><h3>三十三天</h3><div id="heavenBox"></div></div>
+  <div class="card hide"><h3>大地图</h3><div id="mapBox"></div></div>
+</div>
+
+<div class="footer"><span>九天万界 v4.2</span><span id="ftTime">☯</span></div>
+</div>
+
+<div id="sideMask" onclick="closeSide()"></div>
+<div id="side">
+  <div class="sd-hd"><div class="t1">☯ 九天万界</div><div class="t2">FOUR REALMS · SIMULATOR</div></div>
+  <div class="sd-item" onclick="goTab('cult');closeSide()"><span class="ic">☯</span>修炼</div>
+  <div class="sd-item" onclick="goTab('exp');closeSide()"><span class="ic">▲</span>历练</div>
+  <div class="sd-item" onclick="goTab('shop');closeSide()"><span class="ic">坊</span>坊市</div>
+  <div class="sd-item" onclick="goTab('sect');closeSide()"><span class="ic">宗</span>宗门</div>
+  <div class="sd-item" onclick="goTab('world');closeSide()"><span class="ic">界</span>世界</div>
+  <div class="sd-sep"></div>
+  <div class="sd-item" onclick="openSaveBook();closeSide()"><span class="ic">册</span>存档册</div>
+  <div class="sd-item" onclick="askReset();closeSide()"><span class="ic">⟲</span>重置仙途</div>
+  <div class="sd-foot">☯ 九天万界 v4.2</div>
+</div>
+
+<div class="modal" id="modal"><div class="box" id="modalBox"></div></div>
+
+<div id="saveBox"><div class="mask" onclick="closeSaveBook()"></div><div class="dialog"><div class="sb-head">存 档 册</div><div id="saveList"></div><div class="cf-btns"><span class="cf-btn" onclick="closeSaveBook()">关闭</span></div></div></div>
+
+<script>
+// ============================================================
+// 一、核心数据 v4.2
+// ============================================================
+const REALMS_DATA = [
+  { name:'炼气', base:100, life:100, tier:'红尘' },
+  { name:'筑基', base:500, life:200, tier:'红尘' },
+  { name:'金丹', base:3000, life:350, tier:'红尘' },
+  { name:'元婴', base:15000, life:550, tier:'红尘' },
+  { name:'化神', base:80000, life:800, tier:'红尘' },
+  { name:'炼虚', base:400000, life:1200, tier:'紫府' },
+  { name:'合体', base:2000000, life:1800, tier:'紫府' },
+  { name:'大乘', base:10000000, life:2600, tier:'紫府' },
+  { name:'渡劫', base:50000000, life:4000, tier:'紫府' },
+  { name:'地仙', base:200000000, life:8000, tier:'紫府' },
+  { name:'天仙', base:800000000, life:15000, tier:'紫府' },
+  { name:'玄仙', base:3000000000, life:30000, tier:'大罗' },
+  { name:'金仙', base:12000000000, life:60000, tier:'大罗' },
+  { name:'太乙金仙', base:50000000000, life:120000, tier:'大罗' },
+  { name:'大罗金仙', base:200000000000, life:250000, tier:'大罗' },
+  { name:'混元圣人', base:1000000000000, life:999999, tier:'大罗' },
+  { name:'天道', base:5000000000000, life:9999999, tier:'鸿蒙' },
+];
+
+const LINGGEN_DATA = {
+  '金':{n:'金灵根',d:'剑心通明：修炼+50%',spd:1.5},
+  '木':{n:'木灵根',d:'草木亲和：草药双倍',spd:1.1,herb:2},
+  '水':{n:'水灵根',d:'道心如水：突破+8%',brk:.08},
+  '火':{n:'火灵根',d:'火脉炽烈：攻击+25%',atk:1.25},
+  '土':{n:'土灵根',d:'厚土载物：防御+30%',def:1.3},
+  '风':{n:'风灵根',d:'御风而行：速度+20%',spd:1.2},
+  '雷':{n:'雷灵根',d:'雷罚淬体：攻击+20% 突破+5%',atk:1.2,brk:.05},
+  '冰':{n:'冰灵根',d:'寒魄凝神：修炼+10% 恢复×2',spd:1.1,rest:2},
+  '光':{n:'光灵根',d:'光明普照：功德收益+30%',gd:1.3},
+  '暗':{n:'暗灵根',d:'暗影潜行：历练收益+20%',exp:1.2},
+  '空间':{n:'空间灵根',d:'虚空行者：秘境收益+30%',void:1.3},
+  '时间':{n:'时间灵根',d:'岁月掌控：修炼+40%',spd:1.4},
+  '混沌':{n:'混沌灵根',d:'万法归一：全系+15%',spd:1.15,atk:1.1,def:1.15},
+  '无属性':{n:'无属性',d:'中庸之道：平衡稳定',spd:1.0},
+  '变异':{n:'变异灵根',d:'不可预测：随机加成'},
+};
+
+const HOLY_SITES = [
+  {n:'太虚剑宗',d:'一剑破万法',loc:'中州',trait:'剑道'},
+  {n:'丹霞宗',d:'九转金丹诀',loc:'中州',trait:'丹道'},
+  {n:'天机阁',d:'天衍算经',loc:'中州',trait:'推演'},
+  {n:'御灵宗',d:'万兽旗',loc:'中州',trait:'御兽'},
+  {n:'万法门',d:'万法归一',loc:'中州',trait:'博学'},
+  {n:'阵仙阁',d:'周天星斗阵',loc:'中州',trait:'阵法'},
+  {n:'百炼谷',d:'天工锻神',loc:'中州',trait:'炼器'},
+  {n:'忘情道',d:'斩情篇',loc:'中州',trait:'忘情'},
+  {n:'阴阳教',d:'阴阳双生',loc:'中州',trait:'阴阳'},
+  {n:'长生宗',d:'长生不老',loc:'中州',trait:'长生'},
+];
+
+const HEAVENS = [
+  '太皇黄曾天','太明玉完天','清明何童天','玄胎平育天','元明文举天',
+  '上明七曜摩夷天','虚无越衡天','太极蒙翳天','赤明和阳天','玄明恭华天',
+  '耀明宗飘天','竺落皇笳天','虚明堂曜天','观明端靖天','玄明恭庆天',
+  '太焕极瑶天','元载孔升天','太安皇崖天','显定极风天','始皇孝芒天',
+  '太黄翁重浮容天','无思江由天','上揲阮乐天','无极昙誓天','皓庭霄度天',
+  '渊通元洞天','翰宠妙成天','秀乐禁上天','太赤天','禹余天','清微天','大罗天'
+];
+
+const KALPAS = [
+  {n:'混沌无量劫',d:'三千神魔争道，盘古开天辟地',era:'混沌初开'},
+  {n:'金戈劫',d:'先天灵宝争夺，鼎定格局',era:'太古'},
+  {n:'龙汉初劫',d:'龙凤麒麟三族同归于尽',era:'太古'},
+  {n:'延康之劫',d:'冥河吞幽冥，后土化轮回',era:'上古'},
+  {n:'巫妖大劫',d:'巫妖争天，同归于尽',era:'上古'},
+  {n:'开皇之劫',d:'群仙争帝位，昊天登基',era:'远古'},
+  {n:'封神之劫',d:'阐截之争，天庭得神',era:'中古'},
+  {n:'赤明之劫',d:'佛道香火战，离火焚天',era:'中古'},
+  {n:'上皇之劫',d:'人道伐天，绝地天通',era:'近古'},
+  {n:'无量劫',d:'天道重启，圣位重排',era:'当前'},
+];
+
+const ART_GRADES = [
+  {n:'凡品',mult:1,limit:'筑基',costLs:0,costHerb:0,minRealm:0},
+  {n:'灵品',mult:2,limit:'元婴',costLs:800,costHerb:30,minRealm:1},
+  {n:'玄品',mult:4,limit:'大乘',costLs:3000,costHerb:80,minRealm:3},
+  {n:'地品',mult:8,limit:'天仙',costLs:12000,costHerb:200,minRealm:5},
+  {n:'天品',mult:16,limit:'太乙金仙',costLs:50000,costHerb:500,minRealm:7},
+  {n:'圣品',mult:32,limit:'混元圣人',costLs:200000,costHerb:1200,minRealm:9},
+  {n:'鸿蒙品',mult:64,limit:'天道',costLs:800000,costHerb:3000,minRealm:11},
+];
+
+const SECT_SHOP_ITEMS = [
+  {n:'聚气丹',cost:80,reward:()=>{ g.inv['p2']=(g.inv['p2']||0)+1; return '聚气丹×1'; }},
+  {n:'淬体丹',cost:100,reward:()=>{ g.inv['p4']=(g.inv['p4']||0)+1; return '淬体丹×1'; }},
+  {n:'破境丹',cost:300,reward:()=>{ g.inv['p6']=(g.inv['p6']||0)+1; return '破境丹×1'; }},
+  {n:'草药×10',cost:50,reward:()=>{ g.herb+=10; return '草药+10'; }},
+  {n:'矿石×10',cost:50,reward:()=>{ g.ore+=10; return '矿石+10'; }},
+];
+
+const SECT_RANKS = [
+  {min:0,name:'外门弟子'},{min:50,name:'内门弟子'},{min:200,name:'亲传弟子'},
+  {min:500,name:'护法'},{min:1200,name:'长老'},{min:3000,name:'副宗主'},{min:8000,name:'宗主'},
+];
+
+const SMITH_RECIPES = [
+  {n:'青锋剑',id:'e1',ore:8,ls:60},
+  {n:'护心镜',id:'e2',ore:10,ls:80},
+  {n:'聚灵玉',id:'e3',ore:6,ls:50},
+];
+
+const KARMA_TIERS = [
+  {n:'邪魔',min:-80},{n:'魔道',min:-30},{n:'散修',min:0},
+  {n:'善道',min:30},{n:'大德',min:80},
+];
+
+const MAP_ZONES = [
+  {n:'中州',desc:'宗门林立，灵气最盛',event:()=>{ g.ls += 5+g.realm*2; return '灵石+'+(5+g.realm*2); }},
+  {n:'东荒',desc:'妖兽横行，机缘暗藏',event:()=>{ g.herb += 2; return '草药+2'; }},
+  {n:'南疆',desc:'毒瘴弥漫，灵草遍地',event:()=>{ g.herb += 1; g.ore += 1; return '草药+1 矿石+1'; }},
+  {n:'西漠',desc:'古道黄沙，遗迹频现',event:()=>{ g.ore += 2; return '矿石+2'; }},
+  {n:'北海',desc:'寒冰万里，灵鱼成群',event:()=>{ g.ls += 15; return '灵石+15'; }},
+];
+
+const NPC_NAMES = ['楚青瑶','穆清歌','林秋白','苏夜雪','萧千羽','陆芷薇','顾长歌','柳含烟','沈青梧','裴清音','云初雪','宁若曦'];
+
+// 战斗技能（传统仙侠命名）
+const SKILLS = [
+  {id:'basic', n:'裂空斩', cost:0, type:'atk', power:1.0, desc:'基础剑术，无消耗'},
+  {id:'fire', n:'火弹术', cost:5, type:'atk', power:1.5, desc:'以灵力化火弹，150%伤害'},
+  {id:'thunder', n:'引雷术', cost:8, type:'atk', power:2.1, desc:'引天雷下击，210%伤害，15%落空'},
+  {id:'heal', n:'春风化雨', cost:6, type:'heal', power:1.0, desc:'恢复体魄（随境界成长）'},
+  {id:'guard', n:'金光护体', cost:4, type:'guard', power:0.5, desc:'使敌人下回合伤害减半'},
+  {id:'ice', n:'寒冰咒', cost:7, type:'atk', power:1.2, desc:'120%伤害 + 冻结敌人1回合'},
+];
+
+const FISH_POND = [
+  { n:'小鲤鱼', pct:40, rwd:()=>{ g.ls += 5; return '灵石+5'; } },
+  { n:'灵虾',   pct:25, rwd:()=>{ g.herb += 1; return '草药+1'; } },
+  { n:'乌龟',   pct:15, rwd:()=>{ g.life += 1; return '寿元+1'; } },
+  { n:'锦鲤',   pct:10, rwd:()=>{ g.ls += 20; return '灵石+20'; } },
+  { n:'法宝残片', pct:7, rwd:()=>{ g.inv['p1'] = (g.inv['p1']||0) + 1; return '疗伤丹×1'; } },
+  { n:'金龙鱼', pct:2.5, rwd:()=>{ g.ls += 100; return '灵石+100！'; } },
+  { n:'上古遗物', pct:0.5, rwd:()=>{ g.apt += 0.05; return '资质+0.05！'; } },
+];
+
+// ============================================================
+// 二、游戏状态
+// ============================================================
+const SAVE_KEY = 'jiutian_xiuxian_v2';
+
+let g = load();
+
+function newGame() {
+  return {
+    nm:'无名散修', gender:'男', origin:'散修',
+    realm:0, layer:1, xp:0, ls:100, life:100,
+    apt:1, bone:5, wis:3, hp:100, hpMax:100, sta:100,
+    mp:20, mpMax:20,
+    herb:0, ore:0, art:0, brkBuf:0,
+    lg:'金', cycle:0, cyclePoint:0, best:'无', bestIdx:0, timeAcc:0, mutData:null,
+    sit:0, rest:0, expN:0, fishN:0, buyN:0, alcN:0,
+    con:0, taskN:1, gongde:0,
+    eq:{wp:null,ar:null,am:null},
+    inv:{},
+    pet:-1, petLv:0, petXp:0, petEgg:0,
+    plant:{type:-1,due:0},
+    fishList:[],
+    log:[],
+    last:Date.now(),
+    year:1, month:1,
+    worldEvents:[],
+    kalpaTriggered:[],
+    guideDone:0,
+    charDone:0,
+    sect:null, sectName:null,
+    npcs:[], dao:null, daoGift:0,
+    mapLv:0, karma:0, karmaTier:0,
+    bio:[], logT:[],
+    skillLv:{},
+  };
+}
+
+function load() {
+  try {
+    let s = localStorage.getItem(SAVE_KEY);
+    if(s) {
+      let o = JSON.parse(s);
+      if(!o.log) o.log = [];
+      if(!o.fishList) o.fishList = [];
+      if(!o.worldEvents) o.worldEvents = [];
+      if(!o.kalpaTriggered) o.kalpaTriggered = [];
+      if(!o.lg) o.lg = '金';
+      if(!o.timeAcc) o.timeAcc = 0;
+      if(!o.bestIdx) o.bestIdx = 0;
+      if(!o.cyclePoint) o.cyclePoint = 0;
+      if(!o.eq) o.eq = {wp:null,ar:null,am:null};
+      if(!o.inv) o.inv = {};
+      if(!o.plant) o.plant = {type:-1,due:0};
+      if(o.pet === undefined) o.pet = -1;
+      if(!o.petLv) o.petLv = 0;
+      if(!o.petXp) o.petXp = 0;
+      if(!o.petEgg) o.petEgg = 0;
+      if(!o.con) o.con = 0;
+      if(!o.taskN) o.taskN = 1;
+      if(!o.gongde) o.gongde = 0;
+      if(!o.herb) o.herb = 0;
+      if(!o.ore) o.ore = 0;
+      if(!o.seed || o.seed < 0) o.seed = -1;
+      if(!o.sect) o.sect = null;
+      if(!o.sectName) o.sectName = null;
+      if(!o.npcs) o.npcs = [];
+      if(!o.dao) o.dao = null;
+      if(!o.daoGift) o.daoGift = 0;
+      if(!o.mapLv) o.mapLv = 0;
+      if(!o.karma) o.karma = 0;
+      if(!o.karmaTier) o.karmaTier = 0;
+      if(!o.bio) o.bio = [];
+      if(!o.logT) o.logT = [];
+      if(!o.mp) o.mp = 20;
+      if(!o.mpMax) o.mpMax = 20;
+      if(!o.skillLv) o.skillLv = {};
+      if(!o.mutData && o.lg === '变异') o.mutData = randMut();
+      return o;
+    }
+  } catch(e) {}
+  return newGame();
+}
+
+function save() {
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(g)); } catch(e) {}
+}
+setInterval(save, 10000);
+
+// ============================================================
+// 三、核心函数
+// ============================================================
+function curRealm() { return REALMS_DATA[g.realm] || REALMS_DATA[0]; }
+function needXp() { return Math.round(curRealm().base * Math.pow(g.layer, 2.2)); }
+function realmName() {
+  const layers = ['一','二','三','四','五','六','七','八','九'];
+  let r = curRealm();
+  if(r.name === '天道') return '天道·' + layers[g.layer-1] + '层';
+  return r.name + '期·' + layers[g.layer-1] + '层';
+}
+function tierName() { return curRealm().tier || '红尘'; }
+
+function randMut() {
+  return {
+    spd: +(1.1 + Math.random()*0.4).toFixed(2),
+    atk: +(1.05 + Math.random()*0.35).toFixed(2),
+    def: +(1.05 + Math.random()*0.35).toFixed(2),
+    brk: +Math.min(0.12, Math.random()*0.12).toFixed(3)
+  };
+}
+function lgObj() {
+  if(g.lg === '变异' && g.mutData) {
+    let m = g.mutData;
+    return {
+      n:'变异灵根',
+      d:'不可预测：修炼×' + m.spd + ' 攻击×' + m.atk + ' 防御×' + m.def + ' 突破+' + (m.brk*100).toFixed(1) + '%',
+      spd:m.spd, atk:m.atk, def:m.def, brk:m.brk
+    };
+  }
+  return LINGGEN_DATA[g.lg] || LINGGEN_DATA['金'];
+}
+function lgSpd() { return (lgObj().spd || 1); }
+function lgAtk() { return (lgObj().atk || 1); }
+function lgDef() { return (lgObj().def || 1); }
+function lgBrk() { return (lgObj().brk || 0); }
+function daoMod() { return g.dao ? 1.25 : 1; }
+function petMod() { return g.pet >= 0 ? 1 + g.petLv * 0.03 : 1; }
+
+function speedNow() {
+  let base = g.apt * (1 + g.bone*0.02) * (g.wis*0.03 + 1) * (1 + g.cyclePoint*0.02);
+  let artMul = ART_GRADES[Math.min(g.art, ART_GRADES.length-1)].mult;
+  return Math.round(base * artMul * lgSpd() * petMod() * daoMod() * 10);
+}
+
+function brkRate() {
+  let r = 0.6 + g.bone*0.01 + g.brkBuf*0.08 + lgBrk();
+  if(g.gongde >= 50) r += 0.05;
+  if(g.gongde <= -30) r -= 0.05;
+  let k = g.karma || 0;
+  if(k >= 80) r += 0.08;
+  if(k <= -80) r -= 0.08;
+  return Math.min(0.95, Math.max(0.1, r));
+}
+
+function hpMaxNow() {
+  let r = curRealm();
+  return g.hpMax + r.life * 0.5 + g.layer * 15;
+}
+
+function atkNow() {
+  let a = 5 + g.realm * 5 + g.layer * 2;
+  if(g.eq.wp) a += 8 + g.realm * 2;
+  if(g.eq.am) a += 4 + g.realm * 1;
+  let km = (g.karma||0) <= -30 ? 1.15 : ((g.karma||0) >= 30 ? 0.95 : 1);
+  return Math.round(a * lgAtk() * km);
+}
+
+function defNow() {
+  let d = g.bone * 1.5;
+  if(g.eq.ar) d += 6 + g.realm * 2;
+  if(g.eq.am) d += 3 + g.realm * 1;
+  return Math.round(d * lgDef());
+}
+
+function karmaTierName() {
+  let t = KARMA_TIERS[2];
+  for(let k of KARMA_TIERS) if((g.karma||0) >= k.min) t = k;
+  return t.n;
+}
+function sectRankName() {
+  let c = g.con || 0;
+  let r = SECT_RANKS[0];
+  for(let x of SECT_RANKS) if(c >= x.min) r = x;
+  return r.name;
+}
+
+function studyArt() {
+  let idx = g.art;
+  if(idx >= ART_GRADES.length - 1) { log('已修成鸿蒙功法，道法无边！','gold'); return; }
+  let next = ART_GRADES[idx + 1];
+  if(g.realm < next.minRealm) { log('境界不足：参悟' + next.n + '需达' + next.limit + '境','bad'); return; }
+  if(g.ls < next.costLs || g.herb < next.costHerb) { log('参悟' + next.n + '需' + next.costLs + '灵石 + ' + next.costHerb + '草药','bad'); return; }
+  g.ls -= next.costLs;
+  g.herb -= next.costHerb;
+  g.art++;
+  log('✦ 参悟成功！习得【' + ART_GRADES[g.art].n + '】功法，修炼倍率×' + ART_GRADES[g.art].mult,'gold');
+  render();
+}
+
+function spendPoint(type) {
+  if((g.cyclePoint||0) < 1) { log('轮回点不足','bad'); return; }
+  g.cyclePoint--;
+  if(type === 'apt') { g.apt = +(g.apt + 0.1).toFixed(2); log('✦ 悟道：资质+0.1','gold'); }
+  else if(type === 'bone') { g.bone += 2; log('✦ 淬体：根骨+2','gold'); }
+  else if(type === 'life') { g.life += 30; g.hpMax += 30; log('✦ 增寿：寿元+30','gold'); }
+  render();
+}
+
+function kalpaEffect(k) {
+  let r = Math.random();
+  if(r < 0.35) {
+    let loss = Math.floor(g.ls * 0.1) + 50;
+    g.ls = Math.max(0, g.ls - loss);
+    log('☇ 量劫「' + k.n + '」席卷天地，灵石-' + loss,'bad');
+  } else if(r < 0.6) {
+    g.life = Math.max(1, g.life - 20);
+    log('☇ 量劫「' + k.n + '」侵蚀道基，寿元-20','bad');
+  } else if(r < 0.85) {
+    let gain = 300 + g.realm * 60;
+    g.ls += gain;
+    g.gongde = (g.gongde||0) + 3;
+    log('✦ 量劫「' + k.n + '」中顿悟！灵石+' + gain + ' 功德+3','gold');
+  } else {
+    g.brkBuf = Math.min(3, (g.brkBuf||0) + 1);
+    log('✦ 于量劫「' + k.n + '」中窥见天机，突破率+8%','gold');
+  }
+}
+
+// ============================================================
+// 四、游戏操作
+// ============================================================
+function cult() {
+  if(g.life <= 0) { log('寿元已尽，请轮回重生','bad'); return; }
+  let gain = speedNow();
+  g.xp += gain;
+  log('打坐 +' + gain + ' 修为','');
+  checkBreak();
+  render();
+}
+
+function checkBreak() {
+  let need = needXp();
+  if(g.xp >= need && g.layer < 9) {
+    g.xp -= need;
+    g.layer++;
+    log('✦ 突破！' + realmName(), 'gold');
+    render();
+  } else if(g.xp >= need && g.layer === 9 && g.realm < REALMS_DATA.length-1) {
+    if(Math.random() < brkRate()) {
+      g.xp -= need;
+      g.layer = 1;
+      g.realm++;
+      g.life += curRealm().life;
+      g.hpMax = hpMaxNow();
+      g.hp = g.hpMax;
+      g.mpMax += 5;
+      g.mp = g.mpMax;
+      log('☇ 渡劫成功！晋升 ' + realmName() + '，寿元+' + curRealm().life, 'gold');
+    } else {
+      let loss = Math.round(g.xp * 0.3);
+      g.xp -= loss;
+      g.life -= 10;
+      log('✗ 渡劫失败！修为流失 ' + loss + '，寿元-10', 'bad');
+      if(g.life <= 0) { log('寿元耗尽……','bad'); }
+    }
+    render();
+  }
+}
+
+function breakthrough() {
+  let need = needXp();
+  if(g.xp < need) { log('修为不足','bad'); return; }
+  if(g.life <= 0) { log('寿元已尽','bad'); return; }
+  if(g.layer === 9 && g.realm >= REALMS_DATA.length-1) {
+    log('已至天道巅峰，大道已成！','gold');
+    return;
+  }
+  checkBreak();
+}
+
+function toggleSit() {
+  g.sit = g.sit ? 0 : 1;
+  log(g.sit ? '盘膝入定，开始自动修炼……' : '收功起身','');
+  render();
+}
+
+function explore() {
+  if(g.life <= 0) { log('寿元已尽','bad'); return; }
+  if(g.sta < 5) { log('体力不足，先静养','bad'); return; }
+  g.sta -= 5;
+  g.life -= 1;
+  g.expN = (g.expN || 0) + 1;
+  let earn = 10 + Math.floor(Math.random() * 30) + g.realm * 8;
+  if(Math.random() < 0.12 + (lgObj().exp||0)*0.1) {
+    earn *= 2;
+    log('✦ 奇遇！灵石翻倍！','gold');
+  }
+  g.ls += earn;
+  log('秘境归来，灵石 +' + earn + '（' + g.expN + '次）','');
+  if(Math.random() < 0.03) { g.petEgg = (g.petEgg||0) + 1; log('✦ 发现一枚灵宠蛋！','gold'); }
+  render();
+}
+
+function fish() {
+  if(g.life <= 0) { log('寿元已尽','bad'); return; }
+  if(g.sta < 3) { log('体力不足','bad'); return; }
+  g.sta -= 3;
+  g.life -= 1;
+  g.fishN = (g.fishN || 0) + 1;
+  let r = Math.random() * 100, acc = 0, got = FISH_POND[0];
+  for(let f of FISH_POND) { acc += f.pct; if(r < acc) { got = f; break; } }
+  let msg = got.rwd();
+  log('垂钓获得 ' + got.n + '（' + msg + '）','ok');
+  render();
+}
+
+function restSta() {
+  g.rest = g.rest ? 0 : 1;
+  log(g.rest ? '开始静养……' : '收功','');
+  render();
+}
+
+function newNpc() {
+  let n = NPC_NAMES[Math.floor(Math.random() * NPC_NAMES.length)];
+  return { name:n, sex: Math.random()<0.5?'女':'男', fav:0, desc:['剑气冲霄','温婉如水','神秘孤傲','洒脱不羁'][Math.floor(Math.random()*4)] };
+}
+function wander() {
+  if(g.life <= 0) { log('寿元已尽','bad'); return; }
+  if(g.sta < 3) { log('体力不足','bad'); return; }
+  g.sta -= 3;
+  g.npcs = g.npcs || [];
+  let r = Math.random();
+  if(!g.npcs.length || r < 0.35) {
+    let npc = newNpc();
+    g.npcs.push(npc);
+    log('✦ 游历偶遇：「' + npc.name + '」 ' + npc.desc,'gold');
+  } else {
+    let npc = g.npcs[Math.floor(Math.random() * g.npcs.length)];
+    let gain = 10 + g.realm * 5;
+    g.ls += gain;
+    log('游历中与「' + npc.name + '」同行，灵石+' + gain,'');
+  }
+  render();
+}
+function giftNpc(i) {
+  let npc = g.npcs[i];
+  if(!npc) return;
+  if(g.ls < 50) { log('灵石不足','bad'); return; }
+  g.ls -= 50;
+  npc.fav = (npc.fav||0) + 1;
+  log('赠礼「' + npc.name + '」好感+1','ok');
+  render();
+}
+function marryNpc(i) {
+  let npc = g.npcs[i];
+  if(!npc) return;
+  if((npc.fav||0) < 5) { log('好感不足（需5），多赠礼游历','bad'); return; }
+  g.dao = npc;
+  log('❤ 与「' + npc.name + '」结为道侣！双修加成生效。','gold');
+  render();
+}
+function dualCult() {
+  if(!g.dao) { log('尚无道侣','bad'); return; }
+  if(g.life <= 0) { log('寿元已尽','bad'); return; }
+  let gain = Math.round(speedNow() * 1.5);
+  g.xp += gain;
+  log('双修 +' + gain + ' 修为','gold');
+  checkBreak();
+  render();
+}
+
+function gainKarma(v) {
+  g.karma = Math.max(-100, Math.min(100, (g.karma||0) + v));
+  if(Math.abs(g.karma) >= 100) log('✦ 你的业力已达极境：' + karmaTierName(),'gold');
+}
+function doGood() {
+  if(g.life <= 0) { log('寿元已尽','bad'); return; }
+  if(g.sta < 4) { log('体力不足','bad'); return; }
+  g.sta -= 4;
+  g.gongde = (g.gongde||0) + 1;
+  gainKarma(5);
+  log('行善积德：功德+1 业力+5','ok');
+  render();
+}
+function doEvil() {
+  if(g.life <= 0) { log('寿元已尽','bad'); return; }
+  if(g.sta < 4) { log('体力不足','bad'); return; }
+  g.sta -= 4;
+  g.life -= 5;
+  g.brkBuf = Math.min(3, g.brkBuf+1);
+  gainKarma(-5);
+  log('作恶多端：寿元-5 突破+8% 业力-5','bad');
+  render();
+}
+
+function travelZone(i) {
+  let zone = MAP_ZONES[i];
+  if(!zone) return;
+  if(g.life <= 0) { log('寿元已尽','bad'); return; }
+  if(g.sta < 6) { log('体力不足','bad'); return; }
+  g.sta -= 6;
+  g.life -= 2;
+  g.mapLv = i;
+  let r = Math.random();
+  let msg;
+  if(r < 0.2) {
+    let loss = Math.floor(g.ls * 0.05) + 10;
+    g.ls = Math.max(0, g.ls - loss);
+    msg = '遭遇偷袭，灵石-' + loss;
+  } else if(r < 0.55) {
+    msg = zone.event();
+  } else if(r < 0.8) {
+    msg = zone.event() + '，奇遇翻倍！';
+    if(i === 0) g.ls += 10 + g.realm*2;
+  } else {
+    msg = '平安无事，景致壮阔';
+  }
+  log('🗺️ ' + zone.n + '之行：' + msg,'gold');
+  render();
+}
+
+function reincarnate() {
+  if(g.cycle >= 5) { log('轮回已满五世','gold'); return; }
+  let curIdx = g.realm * 9 + g.layer;
+  if(curIdx > (g.bestIdx || 0)) {
+    g.bestIdx = curIdx;
+    g.best = realmName();
+  }
+  g.cycle++;
+  g.cyclePoint = (g.cyclePoint||0) + 2;
+  g.realm = 0; g.layer = 1; g.xp = 0;
+  g.life = 100 + g.cycle * 20;
+  g.ls = Math.max(50, Math.floor(g.ls * 0.3));
+  g.hpMax = 100; g.hp = 100; g.sta = 100;
+  g.mp = 20; g.mpMax = 20;
+  g.herb = 0; g.ore = 0; g.art = 0;
+  g.eq = {wp:null,ar:null,am:null};
+  g.inv = {};
+  g.brkBuf = 0;
+  if(g.lg === '变异') g.mutData = randMut();
+  let bioEntry = {
+    cycle: g.cycle,
+    best: g.best || '无',
+    karma: karmaTierName(),
+    sect: g.sectName || '无',
+    dao: g.dao ? g.dao.name : '无',
+    year: g.year
+  };
+  g.bio = g.bio || [];
+  g.bio.unshift(bioEntry);
+  g.bio = g.bio.slice(0, 20);
+  log('🔄 轮回转世 · 第' + g.cycle + '世开启（轮回点+2）','gold');
+  render();
+}
+
+// ============================================================
+// 五、战斗 v4.2（法术技能 + 熟练度 + 灵宠助战）
+// ============================================================
+let fighting = null;
+
+function calcSkillPower(skill) {
+  let lv = g.skillLv ? (g.skillLv[skill.id] || 0) : 0;
+  return skill.power + lv * 0.08;
+}
+function trainSkill(id) {
+  if(!g.skillLv) g.skillLv = {};
+  g.skillLv[id] = (g.skillLv[id] || 0) + 1;
+  if(g.skillLv[id] >= 10) {
+    log('「' + (SKILLS.find(s=>s.id===id).n) + '」熟练度已达上限','gold');
+    return;
+  }
+  log('「' + (SKILLS.find(s=>s.id===id).n) + '」熟练度 +1（当前'+g.skillLv[id]+'）','');
+}
+
+function startFight() {
+  let idx = Math.min(g.realm + Math.floor(g.layer/3), 9);
+  let mobs = [
+    {n:'野狼',hp:20,atk:3,rwd:10},
+    {n:'妖狐',hp:40,atk:6,rwd:25},
+    {n:'尸傀',hp:70,atk:10,rwd:50},
+    {n:'阴煞鬼修',hp:120,atk:16,rwd:90},
+    {n:'树妖',hp:200,atk:24,rwd:160},
+    {n:'血魔',hp:350,atk:38,rwd:280},
+    {n:'吞天蟒',hp:550,atk:56,rwd:480},
+    {n:'凶兽',hp:850,atk:80,rwd:800},
+    {n:'魔道巨擘',hp:1300,atk:110,rwd:1400},
+    {n:'域外天魔',hp:2000,atk:160,rwd:2500},
+  ];
+  let m = mobs[Math.min(idx, mobs.length-1)];
+  fighting = {m:m, hp:m.hp, frozen:0, guard:0};
+  g.mp = Math.min(g.mpMax, (g.mp||0) + 5);
+  log('⚔ 遭遇 ' + m.n + '！','bad');
+  renderFight();
+}
+
+function castSkill(id) {
+  if(!fighting) return;
+  let skill = SKILLS.find(s => s.id === id);
+  if(!skill) return;
+
+  if(g.mp < skill.cost) {
+    log('灵力不足，只能用裂空斩！','bad');
+    renderFight();
+    return;
+  }
+  g.mp -= skill.cost;
+
+  let msg = '';
+  if(skill.type === 'atk') {
+    let miss = false;
+    if(skill.id === 'thunder' && Math.random() < 0.15) miss = true;
+    if(miss) {
+      log('引雷术落空了！','bad');
+    } else {
+      let dmg = Math.max(1, Math.round(atkNow() * calcSkillPower(skill) * (0.9 + Math.random()*0.2)));
+      fighting.hp -= dmg;
+      msg = '施展「' + skill.n + '」造成 ' + dmg + ' 点伤害';
+      if(skill.id === 'ice') {
+        fighting.frozen = 1;
+        msg += '，敌人被冻结1回合';
+      }
+      log(msg,'');
+    }
+  } else if(skill.type === 'heal') {
+    let heal = Math.round(30 * (1 + g.realm * 0.05));
+    g.hp = Math.min(hpMaxNow(), g.hp + heal);
+    log('春风化雨恢复 ' + heal + ' 体魄','ok');
+  } else if(skill.type === 'guard') {
+    fighting.guard = 1;
+    log('金光护体，下回合受击减半','ok');
+  }
+
+  trainSkill(id);
+
+  if(fighting.hp <= 0) {
+    let rwd = Math.round(fighting.m.rwd * (0.8 + Math.random()*0.4));
+    g.ls += rwd;
+    log('斩杀 ' + fighting.m.n + '！灵石 +' + rwd, 'gold');
+    fighting = null;
+    g.mp = Math.min(g.mpMax, (g.mp||0) + 3);
+    render();
+    return;
+  }
+
+  // 灵宠助战
+  if(g.pet >= 0 && Math.random() < 0.3) {
+    let petDmg = Math.max(1, Math.round(atkNow() * 0.25 * petMod()));
+    fighting.hp -= petDmg;
+    log(PETS[g.pet] + ' 助战，额外造成 ' + petDmg + ' 伤害','ok');
+    if(fighting.hp <= 0) {
+      let rwd = Math.round(fighting.m.rwd * (0.8 + Math.random()*0.4));
+      g.ls += rwd;
+      log('斩杀 ' + fighting.m.n + '！灵石 +' + rwd, 'gold');
+      fighting = null;
+      g.mp = Math.min(g.mpMax, (g.mp||0) + 3);
+      render();
+      return;
+    }
+  }
+
+  enemyTurn();
+
+  g.mp = Math.min(g.mpMax, (g.mp||0) + 2);
+  renderFight();
+  render();
+}
+
+function enemyTurn() {
+  if(!fighting) return;
+  if(fighting.frozen > 0) {
+    fighting.frozen--;
+    renderFight();
+    render();
+    return;
+  }
+  let dmg2 = Math.max(1, Math.round(fighting.m.atk * 0.6 + Math.random()*5 - defNow()*0.3));
+  if(fighting.guard === 1) {
+    dmg2 = Math.max(1, Math.round(dmg2 * 0.5));
+    log('金光护体抵挡，仅受 ' + dmg2 + ' 伤害','ok');
+    fighting.guard = 0;
+  } else {
+    g.hp -= dmg2;
+    log(fighting.m.n + ' 反击 ' + dmg2 + ' 点伤害','bad');
+  }
+  if(g.hp <= 0) {
+    g.hp = 0;
+    log('被 ' + fighting.m.n + ' 重伤……','bad');
+    fighting = null;
+  }
+}
+
+function flee() {
+  if(!fighting) return;
+  if(Math.random() < 0.5) {
+    log('成功遁走！','');
+    fighting = null;
+    render();
+    return;
+  }
+  let dmg = 10 + Math.floor(Math.random()*15);
+  g.hp -= dmg;
+  log('逃遁失败，受击 ' + dmg,'bad');
+  if(g.hp <= 0) { g.hp = 0; log('重伤倒地……','bad'); fighting=null; }
+  renderFight();
+  render();
+}
+
+function renderFight() {
+  let el = document.getElementById('fightBox');
+  if(!fighting) { el.innerHTML = ''; return; }
+  let pct = Math.max(0, (fighting.hp / fighting.m.hp) * 100);
+  let state = '';
+  if(fighting.frozen > 0) state += '<span style="font-size:11px;color:#1e88e5;margin-left:6px">🧊 冻结中</span>';
+  if(fighting.guard > 0) state += '<span style="font-size:11px;color:#b8860b;margin-left:6px">🛡 金光护体</span>';
+
+  let hpPct = Math.max(0, (g.hp / hpMaxNow()) * 100);
+  let mpPct = Math.max(0, (g.mp / Math.max(1,g.mpMax)) * 100);
+
+  let skillsHtml = '';
+  SKILLS.forEach(s => {
+    let ok = g.mp >= s.cost;
+    let lv = g.skillLv ? (g.skillLv[s.id] || 0) : 0;
+    skillsHtml += `<button class="btn sm ${ok?'':'gray'}" onclick="castSkill('${s.id}')">${s.n}${s.cost>0?'·'+s.cost+'灵':''}<br><span style="font-size:8px;color:#999">熟练${lv}/10</span></button>`;
+  });
+
+  el.innerHTML = `
+    <div style="border:1px solid #e4ddd5;border-radius:8px;padding:12px;background:#faf8f5">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b>⚔ ${fighting.m.n}</b>${state}</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="height:6px;background:#eee;border-radius:3px;flex:1;"><i style="display:block;height:100%;width:${pct}%;background:#a93226;border-radius:3px"></i></div>
+        <span style="font-size:10px;color:#888">${Math.max(0,Math.round(fighting.hp))}/${fighting.m.hp}</span>
+      </div>
+    </div>
+    <div style="margin-top:10px;border:1px solid #e4ddd5;border-radius:8px;padding:10px;background:#fff">
+      <div class="kv" style="padding:0 0 6px;border:none"><span>体魄</span><b>${Math.round(g.hp)}/${Math.round(hpMaxNow())}</b></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="height:6px;background:#eee;border-radius:3px;flex:1;"><i style="display:block;height:100%;width:${hpPct}%;background:#b8860b;border-radius:3px"></i></div>
+      </div>
+      <div class="kv" style="padding:8px 0 6px;border:none"><span>灵力</span><b>${Math.floor(g.mp)}/${Math.floor(g.mpMax)}（每回合+2）</b></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="height:6px;background:#eee;border-radius:3px;flex:1;"><i style="display:block;height:100%;width:${mpPct}%;background:#1e88e5;border-radius:3px"></i></div>
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      <div style="font-size:10px;color:#888;margin-bottom:6px">选择法术施放：</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">${skillsHtml}</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn warn" onclick="flee()" style="flex:1">遁走</button>
+      <button class="btn sm" onclick="usePill('p1')">服疗伤丹</button>
+    </div>
+  `;
+}
+// ============================================================
+// 六、炼丹 & 商店 & 装备
+// ============================================================
+const RECIPES = [
+  {n:'疗伤丹',mat:{herb:2},out:'p1'},
+  {n:'聚气丹',mat:{herb:3,ore:1},out:'p2'},
+  {n:'续命丹',mat:{herb:4,ore:2},out:'p3'},
+  {n:'淬体丹',mat:{herb:5,ore:3},out:'p4'},
+  {n:'通脉丹',mat:{herb:8,ore:5},out:'p5'},
+  {n:'破境丹',mat:{herb:10,ore:6},out:'p6'},
+];
+
+const SHOP_ITEMS = [
+  {n:'疗伤丹',p:30,id:'p1',desc:'恢复50体力'},
+  {n:'聚气丹',p:80,id:'p2',desc:'突破+10%'},
+  {n:'续命丹',p:150,id:'p3',desc:'寿元+5'},
+  {n:'淬体丹',p:200,id:'p4',desc:'体魄+3'},
+  {n:'通脉丹',p:400,id:'p5',desc:'资质+0.03'},
+  {n:'破境丹',p:600,id:'p6',desc:'突破+16%'},
+  {n:'草药',p:15,id:'herb',desc:'炼丹材料'},
+  {n:'矿石',p:25,id:'ore',desc:'炼丹材料'},
+  {n:'青锋剑',p:120,id:'e1',desc:'武器：攻击+8'},
+  {n:'护心镜',p:150,id:'e2',desc:'护甲：防御+6'},
+  {n:'聚灵玉',p:100,id:'e3',desc:'饰品：攻防+3'},
+];
+
+const ITEM_NAMES = {p1:'疗伤丹',p2:'聚气丹',p3:'续命丹',p4:'淬体丹',p5:'通脉丹',p6:'破境丹',e1:'青锋剑',e2:'护心镜',e3:'聚灵玉'};
+const EQUIP_SLOTS = {e1:'wp', e2:'ar', e3:'am'};
+
+function buy(id) {
+  let item = SHOP_ITEMS.find(i => i.id === id);
+  if(!item) return;
+  if(g.ls < item.p) { log('灵石不足','bad'); return; }
+  g.ls -= item.p;
+  if(id === 'herb') { g.herb++; }
+  else if(id === 'ore') { g.ore++; }
+  else { g.inv[id] = (g.inv[id]||0) + 1; }
+  log('购入 ' + item.n,'ok');
+  render();
+}
+
+function alchemy(idx) {
+  let r = RECIPES[idx];
+  if(!r) return;
+  if(g.herb < r.mat.herb || g.ore < (r.mat.ore||0)) {
+    log('材料不足','bad'); return;
+  }
+  g.herb -= r.mat.herb;
+  if(r.mat.ore) g.ore -= r.mat.ore;
+  g.inv[r.out] = (g.inv[r.out]||0) + 1;
+  g.alcN = (g.alcN||0) + 1;
+  log('炼成 ' + r.n,'ok');
+  render();
+}
+
+function usePill(id) {
+  if(!g.inv[id] || g.inv[id] <= 0) { log('没有此丹','bad'); return; }
+  g.inv[id]--;
+  if(g.inv[id] <= 0) delete g.inv[id];
+  switch(id) {
+    case 'p1': g.sta = Math.min(100, g.sta+50); g.hp = Math.min(hpMaxNow(), g.hp+30); log('服疗伤丹，体力+50 体魄+30','ok'); break;
+    case 'p2': g.brkBuf = Math.min(3, g.brkBuf+1); log('服聚气丹，突破+10%','ok'); break;
+    case 'p3': g.life += 5; log('服续命丹，寿元+5','ok'); break;
+    case 'p4': g.bone += 3; g.hpMax += 10; log('服淬体丹，体魄+3','ok'); break;
+    case 'p5': g.apt += 0.03; log('服通脉丹，资质+0.03','ok'); break;
+    case 'p6': g.brkBuf = Math.min(3, g.brkBuf+2); log('服破境丹，突破+16%','ok'); break;
+  }
+  render();
+}
+
+function equip(slot, id) {
+  if(!g.inv['e'+id]) return;
+  if(g.eq[slot]) { g.inv['e'+g.eq[slot]] = (g.inv['e'+g.eq[slot]]||0) + 1; }
+  g.eq[slot] = id;
+  g.inv['e'+id]--;
+  if(g.inv['e'+id] <= 0) delete g.inv['e'+id];
+  log('装备 ' + (ITEM_NAMES['e'+id] || id),'ok');
+  render();
+}
+
+function uneq(slot) {
+  let id = g.eq[slot];
+  if(!id) return;
+  g.inv['e'+id] = (g.inv['e'+id]||0) + 1;
+  g.eq[slot] = null;
+  log('卸下装备','');
+  render();
+}
+
+function craftSmith(idx) {
+  let r = SMITH_RECIPES[idx];
+  if(!r) return;
+  if(g.ore < r.ore || g.ls < r.ls) { log('材料不足：需矿石' + r.ore + ' + 灵石' + r.ls,'bad'); return; }
+  g.ore -= r.ore;
+  g.ls -= r.ls;
+  g.inv[r.id] = (g.inv[r.id]||0) + 1;
+  log('🔧 锻造成功：' + r.n + ' ×1','gold');
+  render();
+}
+
+// ============================================================
+// 七、灵宠
+// ============================================================
+const PETS = ['玄龟','青狐','灵鹤','火鸦'];
+
+function incubate() {
+  if(g.petEgg <= 0) { log('没有灵宠蛋','bad'); return; }
+  g.petEgg--;
+  g.pet = Math.floor(Math.random() * PETS.length);
+  g.petLv = 1;
+  g.petXp = 0;
+  log('✦ 灵宠破壳：' + PETS[g.pet] + '！','gold');
+  render();
+}
+
+function feedPet() {
+  if(g.pet < 0) { log('没有灵宠','bad'); return; }
+  if(g.ls < 10) { log('灵石不足','bad'); return; }
+  g.ls -= 10;
+  g.petXp++;
+  if(g.petXp >= g.petLv * 2) {
+    g.petXp = 0;
+    g.petLv = Math.min(8, g.petLv + 1);
+    log(PETS[g.pet] + ' 升级！Lv.' + g.petLv,'gold');
+  } else {
+    log('喂食 ' + PETS[g.pet],'');
+  }
+  render();
+}
+
+// ============================================================
+// 八、灵园
+// ============================================================
+const SEEDS = [
+  {n:'灵草',p:10,out:()=>{g.herb+=2; return '草药+2';}},
+  {n:'灵稻',p:20,out:()=>{g.ls+=10; return '灵石+10';}},
+  {n:'仙桃',p:50,out:()=>{g.life+=1; g.ls+=15; return '寿元+1，灵石+15';}},
+];
+
+function buySeed(idx) {
+  let s = SEEDS[idx];
+  if(g.ls < s.p) { log('灵石不足','bad'); return; }
+  g.ls -= s.p;
+  g.seed = idx;
+  log('购入 ' + s.n + '种','ok');
+  render();
+}
+
+function plant() {
+  if(g.seed === undefined || g.seed < 0) { log('先买种子','bad'); return; }
+  if(g.plant.type >= 0) { log('灵田已种','bad'); return; }
+  g.plant = {type:g.seed, due:Date.now() + 60000};
+  log('种下 ' + SEEDS[g.seed].n,'');
+  render();
+}
+
+function harvest() {
+  if(g.plant.type < 0) { log('灵田空','bad'); return; }
+  if(g.plant.due > Date.now()) { log('尚未成熟','bad'); return; }
+  let s = SEEDS[g.plant.type];
+  let msg = s.out();
+  g.plant = {type:-1, due:0};
+  log('收获 ' + msg,'gold');
+  render();
+}
+
+// ============================================================
+// 九、宗门操作
+// ============================================================
+function joinSect(idx) {
+  let s = HOLY_SITES[idx];
+  if(!s) return;
+  if(g.sect) { log('已有宗门，叛出后才可改投他门','bad'); return; }
+  g.sect = s;
+  g.sectName = s.n;
+  g.con = 0;
+  log('✦ 拜入【' + s.n + '】！开始积累贡献。','gold');
+  render();
+}
+
+function leaveSect() {
+  if(!g.sect) return;
+  g.sect = null;
+  g.sectName = null;
+  g.con = 0;
+  log('叛出宗门，贡献清零。','bad');
+  render();
+}
+
+function sectTask() {
+  if(!g.sect) { log('未入宗门，无任务可接','bad'); return; }
+  if((g.taskN||0) <= 0) { log('今年任务已清，明年再来','bad'); return; }
+  g.taskN--;
+  let rwd = 50 + g.realm * 30 + Math.floor(Math.random()*80);
+  g.ls += rwd;
+  g.con = (g.con||0) + 20;
+  log('护法任务完成：灵石+' + rwd + '，贡献+20','gold');
+  render();
+}
+
+function sectWar() {
+  if(!g.sect) { log('未入宗门，无法参战','bad'); return; }
+  if(g.sta < 10) { log('体力不足','bad'); return; }
+  g.sta -= 10;
+  let r = Math.random();
+  if(r < 0.5) {
+    let gain = 100 + g.realm*20 + Math.floor(Math.random()*80);
+    g.ls += gain;
+    g.con = (g.con||0) + 30;
+    log('⚔ 宗门战获胜！灵石+' + gain + ' 贡献+30','gold');
+  } else if(r < 0.8) {
+    g.life = Math.max(1, g.life-5);
+    log('⚔ 宗门战失利，寿元-5','bad');
+  } else {
+    g.ls += 30;
+    g.con = (g.con||0) + 10;
+    log('⚔ 宗门战平手，灵石+30 贡献+10','');
+  }
+  render();
+}
+
+function buySect(idx) {
+  let item = SECT_SHOP_ITEMS[idx];
+  if(!item) return;
+  if((g.con||0) < item.cost) { log('宗门贡献不足','bad'); return; }
+  g.con -= item.cost;
+  let msg = item.reward();
+  log('宗门商店兑换：' + item.n + '（' + msg + '）','ok');
+  render();
+}
+
+// ============================================================
+// 十、存档
+// ============================================================
+function openSaveBook() {
+  let b = getBook();
+  let el = document.getElementById('saveList');
+  if(!b.length) { el.innerHTML = '<div class="sb-empty">—— 存档册空 ——</div>'; }
+  else {
+    let h = '';
+    b.forEach((s,i) => {
+      h += `<div class="sb-card">
+        <div class="sb-top"><b>${s.nm}</b><span class="sb-rank">${s.realm}</span></div>
+        <div class="sb-info">${s.lg} · 第${s.cycle}世</div>
+        <div class="sb-btns">
+          <span class="cf-btn load" onclick="loadSave(${i})">读取</span>
+          <span class="cf-btn del" onclick="delSave(${i})">删除</span>
+        </div>
+      </div>`;
+    });
+    el.innerHTML = h;
+  }
+  document.querySelector('#saveBox .cf-btns').innerHTML =
+    '<span class="cf-btn" onclick="saveToBook();openSaveBook()">✎ 保存当前</span>' +
+    '<span class="cf-btn" onclick="closeSaveBook()">关闭</span>';
+  document.getElementById('saveBox').style.display = 'block';
+}
+
+function closeSaveBook() { document.getElementById('saveBox').style.display = 'none'; }
+
+function getBook() {
+  try { return JSON.parse(localStorage.getItem('jiutian_save_book')) || []; }
+  catch(e) { return []; }
+}
+function setBook(b) { localStorage.setItem('jiutian_save_book', JSON.stringify(b)); }
+
+function saveToBook() {
+  let b = getBook();
+  let entry = {
+    nm:g.nm, realm:realmName(), lg:g.lg, cycle:g.cycle,
+    time:Date.now(), data:JSON.parse(JSON.stringify(g))
+  };
+  b.unshift(entry);
+  setBook(b.slice(0,5));
+  log('存档成功','ok');
+}
+
+function loadSave(i) {
+  let b = getBook();
+  if(!b[i]) return;
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(b[i].data)); }
+  catch(e) {}
+  closeSaveBook();
+  location.reload();
+}
+
+function delSave(i) {
+  let b = getBook();
+  b.splice(i,1);
+  setBook(b);
+  openSaveBook();
+}
+
+function askReset() {
+  showModal('重置仙途','将清空所有进度，无法找回。','<button class="btn" onclick="localStorage.removeItem(SAVE_KEY);localStorage.removeItem(\'jiutian_save_book\');location.reload();">确认重置</button><button class="btn gray" onclick="hideModal()">取消</button>');
+}
+
+// ============================================================
+// 十一、UI渲染（v4.2 完整版）
+// ============================================================
+function render() {
+  let need = needXp();
+  document.getElementById('nm').textContent = g.nm;
+  document.getElementById('rl').textContent = realmName();
+  document.getElementById('life').textContent = g.life;
+  document.getElementById('ls').textContent = g.ls;
+  document.getElementById('xptxt').textContent = '修为 ' + Math.floor(g.xp) + ' / ' + need;
+  document.getElementById('xpbar').style.width = Math.min(100, g.xp/need*100) + '%';
+  document.getElementById('speed').textContent = '+' + speedNow() + '/秒';
+  document.getElementById('ftTime').textContent = '☯ 第' + g.cycle + '世';
+
+  // ---- 修炼页：打坐 ----
+  let cb = document.getElementById('cultBox');
+  if(cb) {
+    cb.innerHTML = `
+      <div class="kv"><span>境界</span><b>${realmName()}</b></div>
+      <div class="kv"><span>修为</span><b>${Math.floor(g.xp)} / ${need}</b></div>
+      <div class="kv"><span>修炼速度</span><b>${speedNow()}/秒</b></div>
+      <div class="kv"><span>资质</span><b>${g.apt.toFixed(2)}</b></div>
+      <div class="kv"><span>根骨</span><b>${g.bone}</b></div>
+      <div class="kv"><span>灵根</span><b>${g.lg} · ${lgObj().d}</b></div>
+      <div class="kv"><span>功德</span><b>${g.gongde}</b></div>
+      <div class="kv"><span>业力</span><b>${karmaTierName()}（${g.karma||0}）</b></div>
+      <div class="kv"><span>体魄</span><b>${Math.round(g.hp)} / ${Math.round(hpMaxNow())}</b></div>
+      <div class="kv"><span>体力</span><b>${Math.round(g.sta)} / 100</b></div>
+      <div class="btns">
+        <button class="btn" onclick="toggleSit()">${g.sit?'停止打坐':'开始打坐'}</button>
+        <button class="btn" onclick="breakthrough()">突破</button>
+        <button class="btn gray" onclick="restSta()">${g.rest?'停止静养':'静养'}</button>
+        <button class="btn sm" onclick="doGood()">行善</button>
+        <button class="btn sm warn" onclick="doEvil()">作恶</button>
+      </div>
+      <div style="font-size:10px;color:#888;margin-top:6px;letter-spacing:1px">突破成功率 ${Math.round(brkRate()*100)}%${g.brkBuf>0?' · 聚气+'+(g.brkBuf*10)+'%':''}</div>
+    `;
+  }
+
+  // ---- 修炼页：功法 ----
+  let ab = document.getElementById('artBox');
+  if(ab) {
+    let h = '';
+    ART_GRADES.forEach((a,i) => {
+      let status = i < g.art ? '已修' : (i === g.art ? '当前' : '未悟');
+      h += `<div class="kv"><span>${a.n}</span><b>${status} ${i===g.art?'×'+a.mult:''}</b></div>`;
+    });
+    let curA = ART_GRADES[Math.min(g.art, ART_GRADES.length-1)];
+    let nextA = g.art < ART_GRADES.length-1 ? ART_GRADES[g.art+1] : null;
+    let btn = '';
+    if(nextA) {
+      let canRealm = g.realm >= nextA.minRealm;
+      let canPay = g.ls >= nextA.costLs && g.herb >= nextA.costHerb;
+      btn = `<div class="btns"><button class="btn sm ${canRealm&&canPay?'':'gray'}" onclick="studyArt()">参悟【${nextA.n}】（${nextA.costLs}灵石+${nextA.costHerb}草药）</button></div>
+      <div style="font-size:10px;color:#888;margin-top:4px">${canRealm?'':'需'+nextA.limit+'境 · '}${canPay?'':'资源不足'}</div>`;
+    } else {
+      btn = '<div style="font-size:10px;color:#888;margin-top:6px">已至功法之巅</div>';
+    }
+    ab.innerHTML = h + `<div class="kv"><span>当前功法</span><b>${curA.n} ×${curA.mult}</b></div>` + btn;
+  }
+
+  // ---- 修炼页：装备 ----
+  let eq = document.getElementById('eqBox');
+  if(eq) {
+    let slotName = {wp:'武器', ar:'护甲', am:'饰品'};
+    let slots = '';
+    for(let s of ['wp','ar','am']) {
+      let cur = g.eq[s];
+      let name = cur ? (ITEM_NAMES['e'+cur] || cur) : '无';
+      slots += `<div style="flex:1;min-width:80px;border:1px solid #e4ddd5;border-radius:6px;padding:6px;text-align:center;font-size:11px">${slotName[s]}：${name}${cur?' <button class="btn sm" onclick="uneq(\''+s+'\')">卸</button>':''}</div>`;
+    }
+    eq.innerHTML = `
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${slots}</div>
+      <div style="font-size:10px;color:#888;margin-top:6px">攻击 ${atkNow()} · 防御 ${defNow()}</div>
+    `;
+  }
+
+  // ---- 修炼页：轮回 ----
+  let cy = document.getElementById('cycleBox');
+  if(cy) {
+    cy.innerHTML = `
+      <div class="kv"><span>轮回次数</span><b>${g.cycle} 世</b></div>
+      <div class="kv"><span>轮回点</span><b>${g.cyclePoint||0} 点</b></div>
+      <div class="kv"><span>最佳记录</span><b>${g.best||'无'}</b></div>
+      <div class="kv"><span>当前进度</span><b>${realmName()}（第${g.realm*9+g.layer}层）</b></div>
+      <div class="btns">
+        <button class="btn sm" onclick="spendPoint('apt')">悟道·资质+0.1</button>
+        <button class="btn sm" onclick="spendPoint('bone')">淬体·根骨+2</button>
+        <button class="btn sm" onclick="spendPoint('life')">增寿·寿元+30</button>
+      </div>
+      <div style="font-size:10px;color:#888;margin-top:4px">消耗1点 · 每次轮回成功+2点</div>
+      <div class="btns"><button class="btn warn" onclick="reincarnate()">轮回转世</button></div>
+      <div style="font-size:10px;color:#888;margin-top:6px;letter-spacing:1px">寿元耗尽或渡劫失败后，可转世重修</div>
+    `;
+  }
+
+  // ---- 坊市：商店 ----
+  let sb = document.getElementById('shopBox');
+  if(sb) {
+    let h = '';
+    SHOP_ITEMS.forEach(item => {
+      h += `<div class="kv"><span>${item.n}</span><b><button class="btn sm" onclick="buy('${item.id}')">${item.p}灵石</button></b></div>`;
+    });
+    sb.innerHTML = h + `<div style="font-size:10px;color:#888;margin-top:4px">灵石：${g.ls}</div>`;
+  }
+
+  // ---- 坊市：炼丹 ----
+  let abx = document.getElementById('alchemyBox');
+  if(abx) {
+    let h = `<div class="kv"><span>草药</span><b>${g.herb}</b></div><div class="kv"><span>矿石</span><b>${g.ore}</b></div>`;
+    RECIPES.forEach((r,i) => {
+      let ok = g.herb >= r.mat.herb && g.ore >= (r.mat.ore||0);
+      h += `<div class="kv"><span>${r.n}（草${r.mat.herb}${r.mat.ore?' 矿'+r.mat.ore:''}）</span><b><button class="btn sm ${ok?'':'gray'}" onclick="alchemy(${i})">炼制</button></b></div>`;
+    });
+    abx.innerHTML = h;
+  }
+
+  // ---- 历练：秘境 ----
+  let ex = document.getElementById('expBox');
+  if(ex) {
+    ex.innerHTML = `
+      <div class="kv"><span>探索消耗</span><b>体力5 · 寿元1</b></div>
+      <div class="kv"><span>秘境收益</span><b>灵石 ${10+g.realm*8} ~ ${40+g.realm*8}</b></div>
+      <div style="font-size:10px;color:#888;margin:4px 0 8px">有几率触发奇遇（灵石翻倍）或获得灵宠蛋</div>
+      <div class="btns"><button class="btn" onclick="explore()">探索秘境</button></div>
+    `;
+  }
+
+  // ---- 历练：战斗（新） ----
+  let fb = document.getElementById('fightBox');
+  if(fb) {
+    if(fighting) {
+      renderFight();
+    } else {
+      let mobNames = ['野狼','妖狐','尸傀','阴煞鬼修','树妖','血魔','吞天蟒','凶兽','魔道巨擘','域外天魔'];
+      fb.innerHTML = `
+        <div class="kv"><span>当前对手</span><b>${mobNames[Math.min(g.realm + Math.floor(g.layer/3), 9)]}</b></div>
+        <div class="kv"><span>体魄</span><b>${Math.round(g.hp)} / ${Math.round(hpMaxNow())}</b></div>
+        <div style="font-size:10px;color:#888;margin:4px 0 8px">攻击 ${atkNow()} · 防御 ${defNow()} · 灵力 ${Math.floor(g.mp)}/${Math.floor(g.mpMax)}</div>
+        <div class="btns"><button class="btn" onclick="startFight()">开始战斗</button></div>
+      `;
+    }
+  }
+
+  // ---- 历练：垂钓 ----
+  let fs = document.getElementById('fishBox');
+  if(fs) {
+    fs.innerHTML = `
+      <div class="kv"><span>垂钓消耗</span><b>体力3 · 寿元1</b></div>
+      <div class="kv"><span>已钓次数</span><b>${g.fishN||0}</b></div>
+      <div style="font-size:10px;color:#888;margin:4px 0 8px">可钓得灵石、草药、丹药，极小概率得到金龙鱼或上古遗物</div>
+      <div class="btns"><button class="btn" onclick="fish()">抛竿垂钓</button></div>
+    `;
+  }
+
+  // ---- 历练：游历 ----
+  let wn = document.getElementById('wanderBox');
+  if(wn) {
+    if(g.dao) {
+      wn.innerHTML = `
+        <div class="kv"><span>道侣</span><b>${g.dao.name}</b></div>
+        <div class="kv"><span>双修加成</span><b>+25%</b></div>
+        <div class="btns"><button class="btn sm" onclick="dualCult()">双修一次</button></div>
+      `;
+    } else {
+      let h = '';
+      if(!g.npcs.length) {
+        h = '<div style="font-size:11px;color:#888">江湖无交游。开始游历，结识道友。</div>';
+      } else {
+        g.npcs.forEach((npc,i) => {
+          h += `<div class="kv"><span>${npc.name}·${npc.sex}（${npc.desc}）</span><b>好感${npc.fav||0} <button class="btn sm" onclick="giftNpc(${i})">赠礼</button></b></div>`;
+          if((npc.fav||0) >= 5) {
+            h += `<div class="btns"><button class="btn sm" onclick="marryNpc(${i})">结为道侣</button></div>`;
+          }
+        });
+      }
+      wn.innerHTML = `<div class="btns" style="margin-bottom:8px"><button class="btn" onclick="wander()">踏青游历</button></div>${h}`;
+    }
+  }
+
+  // ---- 坊市：储物 ----
+  let bg = document.getElementById('bagBox');
+  if(bg) {
+    let keys = Object.keys(g.inv);
+    let h = '';
+    if(!keys.length) { h = '<div style="font-size:11px;color:#888;letter-spacing:1px">储物袋空空</div>'; }
+    else {
+      keys.forEach(k => {
+        if(k.startsWith('p')) {
+          let name = ITEM_NAMES[k] || k;
+          h += `<div class="kv"><span>${name}</span><b>×${g.inv[k]} <button class="btn sm" onclick="usePill('${k}')">服</button></b></div>`;
+        }
+        else if(k.startsWith('e')) {
+          let eid = k.slice(1);
+          let ename = ITEM_NAMES[k] || ('装备'+eid);
+          let slot = EQUIP_SLOTS[k];
+          h += `<div class="kv"><span>${ename}</span><b>×${g.inv[k]} <button class="btn sm" onclick="equip('${slot}','${eid}')">穿上</button></b></div>`;
+        }
+        else { h += `<div class="kv"><span>${k}</span><b>×${g.inv[k]}</b></div>`; }
+      });
+    }
+    bg.innerHTML = h;
+  }
+
+  // ---- 坊市：灵园 ----
+  let fm = document.getElementById('farmBox');
+  if(fm) {
+    let s = g.seed !== undefined && g.seed >= 0 ? SEEDS[g.seed] : null;
+    let plant = g.plant;
+    let h = `<div class="kv"><span>种子</span><b>${s?s.n:'无（下方购买）'}</b></div>`;
+    if(plant && plant.type >= 0) {
+      let left = Math.max(0, Math.ceil((plant.due - Date.now())/1000));
+      h += `<div class="kv"><span>灵田</span><b>${SEEDS[plant.type].n} 生长中 ${left}s</b></div>`;
+      h += `<div class="btns"><button class="btn" onclick="harvest()">收获</button></div>`;
+    } else {
+      h += `<div class="kv"><span>灵田</span><b>空</b></div>`;
+      h += `<div class="btns">${SEEDS.map((x,i)=>`<button class="btn sm" onclick="buySeed(${i})">${x.n}(${x.p})</button>`).join('')}</div>`;
+      h += `<div class="btns"><button class="btn" onclick="plant()">种下</button></div>`;
+    }
+    fm.innerHTML = h;
+  }
+
+  // ---- 坊市：炼器 ----
+  let sm = document.getElementById('smithBox');
+  if(sm) {
+    let h = `<div class="kv"><span>矿石</span><b>${g.ore}</b></div><div class="kv"><span>灵石</span><b>${g.ls}</b></div>`;
+    SMITH_RECIPES.forEach((r,i) => {
+      let ok = g.ore >= r.ore && g.ls >= r.ls;
+      h += `<div class="kv"><span>${r.n}</span><b><button class="btn sm ${ok?'':'gray'}" onclick="craftSmith(${i})">矿${r.ore}+${r.ls}灵</button></b></div>`;
+    });
+    sm.innerHTML = h;
+  }
+
+  // ---- 宗门 ----
+  let st = document.getElementById('sectBox');
+  if(st) {
+    if(g.sect) {
+      st.innerHTML = `
+        <div class="kv"><span>宗门</span><b>${g.sect.n}</b></div>
+        <div class="kv"><span>理念</span><b style="font-size:10px">${g.sect.d}</b></div>
+        <div class="kv"><span>职位</span><b>${sectRankName()}</b></div>
+        <div class="kv"><span>贡献</span><b>${g.con||0}</b></div>
+        <div class="btns">
+          <button class="btn sm" onclick="sectTask()">护法任务</button>
+          <button class="btn sm" onclick="sectWar()">宗门战</button>
+          <button class="btn sm warn" onclick="leaveSect()">叛出</button>
+        </div>
+        <div style="font-size:10px;color:#888;margin-top:4px">护法任务每年1次 · 宗门战消耗体力10</div>
+      `;
+    } else {
+      let list = HOLY_SITES.map((s,i) =>
+        `<div class="kv"><span>${s.n}·${s.trait}</span><b><button class="btn sm" onclick="joinSect(${i})">拜入</button></b></div>`
+      ).join('');
+      st.innerHTML = `
+        <div style="font-size:10px;color:#888;margin:4px 0 8px">尚未拜入宗门。择一圣地，开启护道之途。</div>
+        ${list}
+      `;
+    }
+  }
+
+  // ---- 宗门商店 ----
+  let sshop = document.getElementById('sectShopBox');
+  if(sshop) {
+    if(!g.sect) {
+      sshop.innerHTML = '<div style="font-size:11px;color:#888">先拜入宗门才能使用贡献兑换。</div>';
+    } else {
+      let h = `<div class="kv"><span>可用贡献</span><b>${g.con||0}</b></div>`;
+      SECT_SHOP_ITEMS.forEach((it,i) => {
+        let can = (g.con||0) >= it.cost;
+        h += `<div class="kv"><span>${it.n}</span><b><button class="btn sm ${can?'':'gray'}" onclick="buySect(${i})">${it.cost}贡献</button></b></div>`;
+      });
+      sshop.innerHTML = h;
+    }
+  }
+
+  // ---- 纪事日志（含回忆录） ----
+  let lb = document.getElementById('logBox');
+  if(lb) {
+    let h = '';
+    if(g.bio && g.bio.length) {
+      g.bio.slice(0,10).forEach(b => {
+        h += `<div class="gold">—— 第${b.cycle}世传记：最高${b.best} · 业力${b.karma} · 道侣${b.dao} · 第${b.year}年 ——</div>`;
+      });
+      h += '<div style="border-bottom:1px dashed #f0ece4;margin:6px 0"></div>';
+    }
+    g.log.slice(0,40).forEach(l => {
+      h += `<div class="${l.c||''}">${l.t}</div>`;
+    });
+    lb.innerHTML = h || '<div>仙途伊始……</div>';
+  }
+
+  // ---- 灵宠 ----
+  let pt = document.getElementById('petBox');
+  if(pt) {
+    let h = '';
+    if(g.petEgg > 0) h += `<div class="kv"><span>灵宠蛋</span><b><button class="btn sm" onclick="incubate()">孵化（${g.petEgg}枚）</button></b></div>`;
+    if(g.pet >= 0) {
+      h += `<div class="kv"><span>${PETS[g.pet]}</span><b>Lv.${g.petLv}（${g.petXp}/${g.petLv*2}）</b></div>`;
+      h += `<div class="kv"><span>修炼加成</span><b>+${Math.round(g.petLv*3)}%</b></div>`;
+      h += `<div class="btns"><button class="btn sm" onclick="feedPet()">喂食(10灵石)</button></div>`;
+    } else if(g.petEgg <= 0) {
+      h += '<div style="font-size:11px;color:#888;letter-spacing:1px">尚无灵宠。探索秘境时偶有灵兽蛋掉落。</div>';
+    }
+    pt.innerHTML = h;
+  }
+
+  // ---- 世界月报 ----
+  let rp = document.getElementById('reportBox');
+  if(rp) {
+    let evs = (g.worldEvents || []).slice(-6).join('<br>') || '世界平静……';
+    rp.innerHTML = `
+      <div class="kv"><span>当前纪元</span><b>${tierName()}</b></div>
+      <div class="kv"><span>时间</span><b>第${g.year}年 · ${g.month}月</b></div>
+      <div class="kv"><span>触发量劫</span><b>${(g.kalpaTriggered||[]).length}</b></div>
+      <div style="font-size:10px;color:#888;margin-top:8px;line-height:1.8">${evs}</div>
+    `;
+  }
+
+  // ---- 量劫 ----
+  let kp = document.getElementById('kalpaBox');
+  if(kp) {
+    let h = '';
+    KALPAS.forEach(k => {
+      let trig = (g.kalpaTriggered||[]).includes(k.n);
+      h += `<div class="kv"><span>${k.n}</span><b style="font-size:10px">${trig?'✓已触发':k.era}</b></div>`;
+    });
+    kp.innerHTML = h + `<div style="font-size:10px;color:#888;margin-top:6px">境界≥合体、年份≥6年后，月报可能触发量劫</div>`;
+  }
+
+  // ---- 圣地 ----
+  let hl = document.getElementById('holyBox');
+  if(hl) {
+    let h = '';
+    HOLY_SITES.forEach(s => {
+      h += `<div class="kv"><span>${s.n}</span><b style="font-size:10px">${s.d}</b></div>`;
+    });
+    hl.innerHTML = h;
+  }
+
+  // ---- 三十三天 ----
+  let hv = document.getElementById('heavenBox');
+  if(hv) {
+    let h = '';
+    HEAVENS.forEach(name => { h += `<span class="pill">${name}</span>`; });
+    hv.innerHTML = '<div style="font-size:10px;color:#888;margin-bottom:6px;letter-spacing:1px">三十三天 · 自下而上</div><div style="display:flex;flex-wrap:wrap;gap:4px">'+h+'</div>';
+  }
+
+  // ---- 大地图 ----
+  let mp = document.getElementById('mapBox');
+  if(mp) {
+    let h = '';
+    MAP_ZONES.forEach((z,i) => {
+      h += `<div class="kv"><span>${z.n} · ${z.desc}</span><b><button class="btn sm" onclick="travelZone(${i})">前往</button></b></div>`;
+    });
+    mp.innerHTML = h + '<div style="font-size:10px;color:#888;margin-top:6px">每次旅行消耗体力6 · 寿元2，有机缘也有风险</div>';
+  }
+
+  // ---- 子页面统一返回按钮 ----
+  let curPg = document.querySelector('.pg.on');
+  if(curPg) {
+    curPg.querySelectorAll('.card:not(.hide)').forEach(card => {
+      if(card.querySelector('.sec-back')) return;
+      if(card.id === 'fightBox' && fighting) return;
+      let back = document.createElement('button');
+      back.className = 'btn sm gray sec-back';
+      back.textContent = '〈 返回';
+      back.style.marginBottom = '10px';
+      back.onclick = () => goSub(curPg.id, 0);
+      card.insertBefore(back, card.firstChild);
+    });
+  }
+
+  save();
+}
+
+// ============================================================
+// 十二、世界事件
+// ============================================================
+function worldTick() {
+  let evs = [
+    '灵脉波动，某处秘境隐有异动……',
+    '坊市传来消息，妖兽潮逼近边境。',
+    '天机阁发布新卦象：气运流转。',
+    '某散修在荒野发现上古遗迹。',
+    '宗门间传闻，有魔修潜入中州。',
+  ];
+  let ev = evs[Math.floor(Math.random() * evs.length)];
+  g.worldEvents.push('第' + g.year + '年' + g.month + '月：' + ev);
+  if(g.worldEvents.length > 20) g.worldEvents.shift();
+  if(g.year > 5 && g.realm >= 6 && Math.random() < 0.02) {
+    let k = KALPAS[Math.floor(Math.random() * KALPAS.length)];
+    if(!g.kalpaTriggered.includes(k.n)) {
+      g.kalpaTriggered.push(k.n);
+      g.worldEvents.push('✦ 量劫降临：' + k.n + '！' + k.d);
+      kalpaEffect(k);
+    }
+  }
+}
+
+// ============================================================
+// 十三、UI工具
+// ============================================================
+function showModal(title, msg, btns) {
+  let el = document.getElementById('modalBox');
+  el.innerHTML = `<h2>${title}</h2><p>${msg}</p>` + (btns || '<button class="btn" onclick="hideModal()">知晓</button>');
+  document.getElementById('modal').style.display = 'flex';
+}
+function hideModal() { document.getElementById('modal').style.display = 'none'; }
+
+function log(msg, cls) {
+  let time = '第' + g.year + '年' + g.month + '月';
+  g.log.unshift({t:'[' + time + '] ' + msg, c:cls||''});
+  g.logT = g.logT || [];
+  g.logT.unshift({t:msg, c:cls||'', y:g.year, m:g.month});
+  if(g.log.length > 80) g.log.pop();
+  render();
+}
+
+function goTab(t) {
+  document.querySelectorAll('.tabs div').forEach(el => el.classList.toggle('on', el.dataset.t === t));
+  document.querySelectorAll('.pg').forEach(el => el.classList.remove('on'));
+  let pg = document.getElementById('pg-' + t);
+  if(pg) pg.classList.add('on');
+  document.querySelectorAll('.pg .card').forEach(c => c.classList.add('hide'));
+  document.querySelectorAll('.pg .grid-2').forEach(gx => gx.style.display = 'grid');
+  render();
+}
+
+function goSub(pid, idx) {
+  let pg = document.getElementById(pid);
+  if(!pg) return;
+  pg.querySelectorAll('.card').forEach(c => c.classList.add('hide'));
+  if(idx === 0) {
+    pg.querySelectorAll('.grid-2').forEach(gx => gx.style.display = 'grid');
+    render();
+    return;
+  }
+  pg.querySelectorAll('.grid-2').forEach(gx => gx.style.display = 'none');
+  let card = pg.querySelectorAll('.card')[idx-1];
+  if(card) card.classList.remove('hide');
+  render();
+}
+
+function openSide() {
+  document.getElementById('sideMask').style.display = 'block';
+  document.getElementById('side').classList.add('open');
+}
+function closeSide() {
+  document.getElementById('sideMask').style.display = 'none';
+  document.getElementById('side').classList.remove('open');
+}
+
+function randName() {
+  let ns = ['玄机子','清尘子','明月心','赤霞君','白鹿翁','妙法生','凌霄客','青玄','云中子','天璇'];
+  document.getElementById('gdName').value = ns[Math.floor(Math.random()*ns.length)];
+}
+
+// ============================================================
+// 十四、角色创建 & 启动
+// ============================================================
+function enterGame() {
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('gender').classList.add('on');
+}
+
+function finishChar(gender) {
+  let nm = document.getElementById('gdName').value.trim() || '无名散修';
+  let lg = document.getElementById('gdLinggen').value;
+  if(lg === 'random') {
+    let keys = Object.keys(LINGGEN_DATA);
+    lg = keys[Math.floor(Math.random() * keys.length)];
+  }
+  let origin = document.getElementById('gdOrigin').value;
+
+  g.nm = nm;
+  g.gender = gender;
+  g.lg = lg;
+  g.origin = origin;
+  g.charDone = 1;
+  g.life = 100;
+  if(lg === '变异' && !g.mutData) g.mutData = randMut();
+
+  document.getElementById('gender').classList.remove('on');
+  document.getElementById('main').style.display = 'block';
+  log('✦ 道号「' + nm + '」· ' + gender + ' · ' + lg + '灵根 · ' + origin,'gold');
+  log('仙途开启！','gold');
+  render();
+}
+
+// ============================================================
+// 十五、主循环（世界时间推进）
+// ============================================================
+setInterval(() => {
+  let now = Date.now();
+  let dt = Math.min(3600, (now - (g.last||now)) / 1000);
+  g.last = now;
+
+  // 打坐（寿元为0无法修炼）
+  if(g.sit && g.life > 0) {
+    let gain = speedNow() * dt;
+    g.xp += gain;
+  }
+
+  // 静养
+  if(g.rest && g.sta < 100) {
+    g.sta += dt * (lgObj().rest || 1);
+    if(g.sta > 100) g.sta = 100;
+  }
+
+  // 寿元自然流逝
+  if(g.life > 0 && Math.random() < 0.0005 * dt) {
+    g.life -= 1;
+    if(g.life <= 0) { g.life = 0; log('寿元耗尽……','bad'); }
+  }
+
+  // 每15秒推进1个月，每3个月一个世界事件
+  g.timeAcc = (g.timeAcc || 0) + dt;
+  if(g.timeAcc >= 15) {
+    g.timeAcc -= 15;
+    g.month++;
+    if(g.month > 12) {
+      g.month = 1;
+      g.year++;
+      g.taskN = 1;
+      log('✦ 新岁已至：第' + g.year + '年','gold');
+    }
+    if(g.month % 3 === 0) worldTick();
+  }
+
+  // 自动突破检测
+  checkBreak();
+
+  render();
+}, 1000);
+
+// ============================================================
+// 初始渲染 & 已有存档直接进入
+// ============================================================
+render();
+
+if(g.charDone) {
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('gender').classList.remove('on');
+  document.getElementById('main').style.display = 'block';
+}
+
+</script>
+</body>
+</html>
